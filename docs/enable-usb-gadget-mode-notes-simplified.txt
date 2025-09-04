@@ -1,0 +1,72 @@
+To enable USB serial gadget mode on your Pi Zero 2 W, while keeping HDMI and keyboard working, starting from "known-good setup (fresh or existing card)":
+
+---
+
+### 1. Edit the Correct Files on the SD Card (or on the Pi)
+
+**a. `/boot/firmware/config.txt`**  
+Add (or ensure you have) this line anywhere (preferably near the end):
+```
+dtoverlay=dwc2
+```
+
+**b. `/boot/firmware/cmdline.txt`**  
+On the single line, append (after `rootwait` and before `console=tty1`):
+```
+modules-load=dwc2,g_serial
+```
+Example:
+```
+... rootwait modules-load=dwc2,g_serial console=tty1
+```
+(Do not add line breaks.)
+
+---
+
+### 2. Boot the Pi with HDMI and Keyboard Connected
+
+- Insert the SD card, power up, and log in as usual.
+
+---
+
+### 3. Enable the Getty on the Gadget Port
+
+On the Pi, run:
+```bash
+sudo systemctl enable --now serial-getty@ttyGS0.service
+```
+This will ensure a login prompt appears on the USB serial gadget.
+
+---
+
+### 4. Verify the Setup
+
+On the Pi, check:
+```bash
+ls -l /dev/ttyGS0
+lsmod | grep -E 'dwc2|g_serial'
+systemctl status serial-getty@ttyGS0.service
+```
+Should see `/dev/ttyGS0`, both modules loaded, and the getty service active.
+
+---
+
+### 5. Connect the Pi to Your Windows Laptop & Zimaboard
+
+- Use a data-capable micro-USB cable from the Pi’s “USB” port (not “PWR IN”) to laptop
+- In Windows Device Manager, you should see “USB Serial Device (COMx)”.
+- Do the same with the zimaboard
+
+---
+
+### 6. Open a Serial Terminal on Windows
+
+- Use PuTTY or TeraTerm.
+- Connect to the correct COM port at 115200 baud.
+- Press Enter a few times, should then see the Pi’s login prompt.
+
+---
+
+**Should now have both HDMI/keyboard and USB serial gadget login working.**  
+Troubleshooting: check the debug steps in the notes (especially enabling getty & checking for `/dev/ttyGS0`).
+
