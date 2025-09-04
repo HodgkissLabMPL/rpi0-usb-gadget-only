@@ -1,8 +1,10 @@
-- see ** below (baseline info)
+- see ** below (baseline info): htop, dmesg, lsmod, /dev/ttyGS0, systemctl status, and /proc/cmdline before and after
+- backup config.txt & cmdline.txt, etc.
 - test enabling usb serial gadget mode on the "fresh" rpi0 (SanDisk 16GB SDCard)
 - test rpi0 connection from laptop (vscode, etc.) & from zimaboard (similar/same?) or note differences between laptop & zimaboard (two versions/branches needed?)  
 - then create a script to automate the process on future rpi0s from scratch
 - (optional - otherwise add to todo in rpi0-power) create SDCard image for usb serial gadget mode on rpi0 (without any extra features or optimizations)
 - integrate the solution from this repo into rpi0-power repo & make sure power optimizations still work
 - (optional - otherwise add to todo in rpi0-power) revisit serial expansion hat & do simple test with/without usb gadget mode, etc. - note the various serial/usb/etc. /dev/<device> on the rip0 & on the other end (laptop/zimaboard, e.g. comX)
-- ** check & record/log dmesg & htop & ?raspi-config & other useful logs/system info etc. - both initially/fresh SD card & after things are added/changed 
+- ** check & record/log dmesg & htop & ?raspi-config & other useful logs/system info etc. - both initially/fresh SD card & after things are added/changed
+- (optional) use/test script that makes the required changes & looks at logs/system info & saves as log in home directory with timestamp
